@@ -4,20 +4,31 @@ const app = express();
 
 app.use(express.json());
 
+let command = "LED_OFF";
+
 app.get("/", (req, res) => {
   res.send("ESP8266 AI LED Server is running!");
 });
 
-app.post("/led/on", (req, res) => {
-  console.log("LED ON command received");
+// ESP8266 əmri buradan oxuyacaq
+app.get("/command", (req, res) => {
+  res.send(command);
+});
+
+// LED ON
+app.get("/led/on", (req, res) => {
+  command = "LED_ON";
+
   res.json({
     success: true,
     command: "LED_ON"
   });
 });
 
-app.post("/led/off", (req, res) => {
-  console.log("LED OFF command received");
+// LED OFF
+app.get("/led/off", (req, res) => {
+  command = "LED_OFF";
+
   res.json({
     success: true,
     command: "LED_OFF"
